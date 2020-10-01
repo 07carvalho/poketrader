@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    networks:
+      - pokenetwork
+  api:
+    container_name: poke-api
+    build: ./api
+    command: ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+    volumes:
+      - ./api:/app/api
+    ports:
+      - '8000:8000'
+    networks:
+      - pokenetwork
+    restart: always
+    depends_on:
+      - db
+
+volumes:
+  db:
+
+networks:
+  pokenetwork:
+      driver: bridge
