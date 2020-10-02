@@ -5,7 +5,7 @@ from base.interfaces.pokeapi import PokeApiInterface
 from base.serializers.pokemon import PokemonSerializer
 
 
-class PostDetail(APIView):
+class PokemonDetail(APIView):
 
     def get(self, request, pokemon, format=None):
         data = PokeApiInterface().get_pokemon(pokemon)
