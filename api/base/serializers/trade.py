@@ -16,6 +16,5 @@ class TradeListSerializer(serializers.Serializer):
 
     def validate_their(self, value):
         if not 1 <= len(value) <= 6:
-            print("j")
             raise serializers.ValidationError()
         return value

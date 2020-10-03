@@ -7,7 +7,6 @@ class Pokemon:
     def sum_base_experience(self, pokemon_list) -> int:
         sum = 0
         for pokemon in pokemon_list:
-            print(pokemon.get('name'))
             data = PokeApiInterface().get_pokemon(pokemon.get('name'))
             sum += data.get('base_experience')
         return sum
