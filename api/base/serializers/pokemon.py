@@ -19,3 +19,4 @@ class PokemonSerializer(serializers.Serializer):
     weight = serializers.IntegerField()
     species = SpecieSerializer()
     types = TypeSerializer(many=True)
+    image = serializers.URLField()

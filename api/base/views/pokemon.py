@@ -8,7 +8,7 @@ from base.serializers.pokemon import PokemonSerializer
 class PokemonDetail(APIView):
 
     def get(self, request, pokemon, format=None):
-        data = PokeApiInterface().get_pokemon(pokemon)
+        data = PokeApiInterface().get_pokemon(pokemon.lower())
         serializer = PokemonSerializer(data=data)
         if serializer.is_valid():
             return Response(serializer.data, status=status.HTTP_200_OK)
