@@ -10,8 +10,10 @@ import { Navbar, NavbarBrand } from "reactstrap";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Navbar className="navbar-horizontal navbar-dark bg-default mb-3" expand="lg">
-      <NavbarBrand className="ml-3" href="#" onClick={e => e.preventDefault()}>PokeTrade</NavbarBrand>
+    <Navbar className="navbar-horizontal navbar-dark bg-default pt-4 pb-4 mb-3" expand="lg">
+      <NavbarBrand className="ml-3" href="#" onClick={e => e.preventDefault()}>
+        <img src={require('./assets/img/brand/logo.png')} />
+      </NavbarBrand>
     </Navbar>
     <App />
   </React.StrictMode>,

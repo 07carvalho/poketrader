@@ -20,16 +20,17 @@ class Home extends React.Component {
     super(props)
     this.state = {
       myPokemon: '',
+      loadingMyPokemon: false,
       theirPokemon: '',
+      loadingTheirPokemon: false,
       my: [],
       their: [],
       errorModal: false,
       evaluationModal: false,
       result: {
         good_trade: '',
-        base_experience: {
-          sum_my: '', sum_their: ''
-        }
+        my_total_base_experience: '',
+        their_total_base_experience: ''
       }
     }
     this.handleChange = this.handleChange.bind(this);
@@ -38,19 +39,22 @@ class Home extends React.Component {
   getPokemon = event => {
     const key = event.target.getAttribute('data-type');
     const pokemon = this.state[key + 'Pokemon'];
+    const loading = key === 'my' ? 'loadingMyPokemon' : 'loadingTheirPokemon';
     this.setState({
-      [key + 'Pokemon']: ''
+      [key + 'Pokemon']: '',
+      [loading]: !this.state[loading]
     })
     API.getPokemon(pokemon)
     .then((response) => {
       if (response && response.status === 200) {
-        console.log(response)
         this.setState({
+          [loading]: !this.state[loading],
           [key]: [...this.state[key], response.data]
         })
       } else {
         this.setState({
-          errorModal: !this.state.errorModal
+          errorModal: !this.state.errorModal,
+          [loading]: !this.state[loading],
         });
       }
     })
@@ -105,9 +109,7 @@ class Home extends React.Component {
   }
 
   showPokemonList = (type) => {
-    console.log(this.state.my)
     return this.state[type].map((pokemon, index) => {
-      console.log(pokemon)
       return (
         <Col xs="4" key={index}>
           <Card className="poke-card mb-4">
@@ -158,10 +160,11 @@ class Home extends React.Component {
           <Row className="mr-3 ml-3">
             <Col className="mb-5">
               <div>
-                <h3><i className="ni ni-bold-right" /> My Pokemon</h3>
+                <h3>
+                  <img className="pokeball-icon responsive-img" src={require('../../assets/img/theme/pokeball-red.png')}/> My Pokemon</h3>
                 <Form data-type="my" onSubmit={this.onFormSubmit}>
                   <Row>
-                    <Col xs="12" sm="8">
+                    <Col xs="12" md="8">
                       <FormGroup>
                         <Input
                           id="my-pokemon-input"
@@ -178,7 +181,7 @@ class Home extends React.Component {
                       <Button block color="primary" type="button"
                         disabled={this.state.myPokemon.length === 0}
                         data-type="my" onClick={this.getPokemon}>
-                        Search
+                        {this.state.loadingMyPokemon ? 'Loading...' : 'Search'}
                       </Button>
                     </Col>
                   </Row>
@@ -198,10 +201,11 @@ class Home extends React.Component {
             </Col>
             <Col className="mb-5">
               <div>
-                <h3><i className="ni ni-bold-left" /> Their Pokemon</h3>
+                <h3>
+                  <img className="pokeball-icon responsive-img" src={require('../../assets/img/theme/pokeball-blue.png')}/> Their Pokemon</h3>
                 <Form data-type="their" onSubmit={this.onFormSubmit}>
                   <Row>
-                    <Col xs="12" sm="8">
+                    <Col xs="12" md="8">
                       <FormGroup>
                         <Input
                           id="their-pokemon-input"
@@ -219,7 +223,7 @@ class Home extends React.Component {
                         data-type="their"
                         disabled={this.state.theirPokemon.length === 0}
                         onClick={this.getPokemon}>
-                        Search
+                        {this.state.loadingTheirPokemon ? 'Loading...' : 'Search'}
                       </Button>
                     </Col>
                   </Row>
@@ -299,17 +303,26 @@ class Home extends React.Component {
             </button>
           </div>
           <div className="modal-body">
-            {this.state.result.good_trade &&
-            <p>Nice work! This is a good trade!</p>
-            }
-            {!this.state.result.good_trade &&
-            <p>Oh no! This is not a good trade!</p>
-            }
-            {this.state.result && <div>
-              <p className="mb-0 font-weight-700">Base Experience Sums</p>
-              <p className="mb-0">My Pokemon: {this.state.result.base_experience.sum_my}</p>
-              <p className="mb-0">Their Pokemon: {this.state.result.base_experience.sum_their}</p>
-            </div>}
+            <Row>
+              <Col className="valign-wrapper" sm="6">
+                <div className="pl-5 pr-5">
+                  <img className="responsive-img" src={require('../../assets/img/theme/trade.png')} />
+                </div>
+              </Col>
+              <Col sm="6">
+                {this.state.result.good_trade &&
+                <p>Nice work! This is a good trade!</p>
+                }
+                {!this.state.result.good_trade &&
+                <p>Oh no! This is not a good trade!</p>
+                }
+                {this.state.result && <div>
+                  <p className="mb-0 font-weight-700">Base Experience Sums</p>
+                  <p className="mb-0">My Pokemon: {this.state.result.my_total_base_experience}</p>
+                  <p className="mb-0">Their Pokemon: {this.state.result.their_total_base_experience}</p>
+                </div>}
+              </Col>
+            </Row>
           </div>
           <div className="modal-footer">
             <Button
