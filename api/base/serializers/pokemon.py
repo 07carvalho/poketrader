@@ -1,22 +1,13 @@
 from rest_framework import serializers
+from base.models.pokemon import Pokemon
 
 
-class SpecieSerializer(serializers.Serializer):
-    name = serializers.CharField()
-    url = serializers.CharField()
+class PokemonSerializer(serializers.ModelSerializer):
+    name = serializers.SerializerMethodField()
 
+    class Meta:
+        model = Pokemon
+        fields = '__all__'
 
-class TypeSerializer(serializers.Serializer):
-    slot = serializers.IntegerField()
-    type = SpecieSerializer()
-
-
-class PokemonSerializer(serializers.Serializer):
-    id = serializers.IntegerField()
-    name = serializers.CharField()
-    base_experience = serializers.IntegerField()
-    height = serializers.IntegerField()
-    weight = serializers.IntegerField()
-    species = SpecieSerializer()
-    types = TypeSerializer(many=True)
-    image = serializers.URLField()
+    def get_name(self, obj):
+        return obj.name.capitalize()

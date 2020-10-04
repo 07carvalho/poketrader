@@ -5,7 +5,10 @@ class PokeApiInterface:
 
     def get_pokemon(self, pokemon: str):
         response = PokeApiService().get_pokemon(pokemon)
-        response['name'] = response.get('name').capitalize()
-        # getting the url image from another api
-        response['image'] = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/' + str(response.get('id')) + '.png'
-        return response
+        return {
+            'id': response.get('id'),
+            'name': response.get('name'),
+            'base_experience': response.get('base_experience'),
+            'height': response.get('height'),
+            'weight': response.get('weight'),
+        }

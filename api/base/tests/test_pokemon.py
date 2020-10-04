@@ -6,11 +6,21 @@ from rest_framework.test import APITestCase
 class TestPokemonApi(APITestCase):
     def test_get_pokemon_by_name(self):
         """Make a request to get a Pokemon by name"""
-        url = reverse('pokemon_detail', kwargs={'pokemon': 'ninetales'})
+        pokemon = 'ninetales'
+        url = reverse('pokemon_detail', kwargs={'pokemon': pokemon})
         response = Client().get(url)
         self.assertEqual(200, response.status_code)
         self.assertEqual(38, response.data.get('id'))
-        self.assertEqual('ninetales', response.data.get('name'))
+        self.assertEqual(pokemon.capitalize(), response.data.get('name'))
+
+    def test_get_pokemon_by_uppercase_name(self):
+        """Make a request to get a Pokemon by name"""
+        pokemon = 'NineTales'
+        url = reverse('pokemon_detail', kwargs={'pokemon': pokemon})
+        response = Client().get(url)
+        self.assertEqual(200, response.status_code)
+        self.assertEqual(38, response.data.get('id'))
+        self.assertEqual(pokemon.capitalize(), response.data.get('name'))
 
     def test_get_pokemon_by_id(self):
         """Make a request to get a Pokemon by id"""
@@ -18,7 +28,7 @@ class TestPokemonApi(APITestCase):
         response = Client().get(url)
         self.assertEqual(200, response.status_code)
         self.assertEqual(1, response.data.get('id'))
-        self.assertEqual('bulbasaur', response.data.get('name'))
+        self.assertEqual('Bulbasaur', response.data.get('name'))
 
     def test_get_pokemon_by_wrong_name(self):
         """Make a request to hit in 404 error"""
