@@ -10,7 +10,7 @@ import {
   FormGroup,
   Input,
   Modal,
-  Row,
+  Row
 } from 'reactstrap';
 import API from '../../api/API';
 
@@ -44,6 +44,7 @@ class Home extends React.Component {
     API.getPokemon(pokemon)
     .then((response) => {
       if (response && response.status === 200) {
+        console.log(response)
         this.setState({
           [key]: [...this.state[key], response.data]
         })
@@ -104,7 +105,9 @@ class Home extends React.Component {
   }
 
   showPokemonList = (type) => {
+    console.log(this.state.my)
     return this.state[type].map((pokemon, index) => {
+      console.log(pokemon)
       return (
         <Col xs="4" key={index}>
           <Card className="poke-card mb-4">
