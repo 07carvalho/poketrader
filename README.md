@@ -15,6 +15,11 @@ Stack:
 * Docker
 * Heroku
 
+## Architecture
+The backend application works with a MVCS architecture. The Service Layer is used to make requests to [PokeAPI](https://pokeapi.co/).
+
+### Strategy
+When a user searches for a Pokemon, the application tries to get it from the database first and, if it doesn't get it, requests it to PokeAPI, persisting the returned result later. This will improve performance when this Pokemon is retrieved again.
 
 ## Run locally
 To run the backend service, run:
