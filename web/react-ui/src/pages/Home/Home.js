@@ -153,10 +153,10 @@ class Home extends React.Component {
 
   render() {
     return (
-      <main className="mt-5 mb-5">
+      <main className="mb-5">
         <section className="section section-lg pt-lg-0">
           <Row className="mr-3 ml-3">
-            <Col className="ml-5 mr-5">
+            <Col className="mb-5">
               <div>
                 <h3><i className="ni ni-bold-right" /> My Pokemon</h3>
                 <Form data-type="my" onSubmit={this.onFormSubmit}>
@@ -196,7 +196,7 @@ class Home extends React.Component {
                 </div>
               }
             </Col>
-            <Col className="ml-5 mr-5">
+            <Col className="mb-5">
               <div>
                 <h3><i className="ni ni-bold-left" /> Their Pokemon</h3>
                 <Form data-type="their" onSubmit={this.onFormSubmit}>
@@ -238,7 +238,9 @@ class Home extends React.Component {
               }
             </Col>
           </Row>
-          <Row className="mt-6 mr-5 float-right">
+        </section>
+        <div className="evaluation-footer">
+          <Row className="float-right">
             <Col className="mr-3">
               <Button className="btn-icon btn-3" color="primary"
                 disabled={this.disableEvaluationBtn()}
@@ -250,7 +252,7 @@ class Home extends React.Component {
               </Button>
             </Col>
           </Row>
-        </section>
+        </div>
         <Modal
           className="modal-dialog-centered"
           isOpen={this.state.errorModal}

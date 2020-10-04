@@ -33,3 +33,12 @@ button.btn-primary {
 .poke-card:hover .remove-btn {
     display: block;
 }
+
+.evaluation-footer {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    padding: 16px;
+    background-color: red;
+}
