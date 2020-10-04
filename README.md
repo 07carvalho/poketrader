@@ -42,6 +42,10 @@ To see an amazing webapp, go to:
 
 Gotta catch 'em all!
 
+## Swagger
+The API documentation is available in:
+[http://localhost:8000/docs](http://localhost:8000/docs)
+
 ## Testing
 To test the backend service, run:
 > docker-compose run api python3 manage.py test base

@@ -1,3 +1,4 @@
+from drf_yasg.utils import swagger_auto_schema
 from rest_framework import status, exceptions
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -8,6 +9,7 @@ from base.models.evaluation import Evaluation
 
 class EvaluationDetail(APIView):
 
+    @swagger_auto_schema(responses={200: TradeListSerializer(many=True)})
     def post(self, request, format=None):
         serializer = TradeListSerializer(data=request.data)
         if serializer.is_valid():
